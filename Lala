@@ -1,0 +1,27 @@
+local loadingScreen = script.Parent
+local loadingText = loadingScreen:WaitForChild("Background"):WaitForChild("LoadingText")
+local fillBar = loadingScreen:WaitForChild("Background"):WaitForChild("LoadingBar"):WaitForChild("FillBar")
+
+local totalTime = 60
+local loadingSpeed = 1 -- the time it takes to fill the bar
+
+for i = totalTime, 0, -1 do
+	-- Update the text
+	loadingText.Text = "Loading... " .. i .. "s remaining"
+
+	-- Update the loading bar
+	local barFill = (totalTime - i) / totalTime
+	fillBar.Size = UDim2.new(barFill, 0, 1, 0)
+
+	wait(loadingSpeed)
+end
+
+-- Fade out effect after the countdown
+for t = 0, 1, 0.05 do
+	loadingScreen.Background.BackgroundTransparency = t
+	loadingText.TextTransparency = t
+	fillBar.BackgroundTransparency = t
+	wait(0.05)
+end
+
+loadingScreen:Destroy()  -- Remove the loading screen after the fade out
